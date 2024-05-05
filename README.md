@@ -14,4 +14,5 @@ All the methods are available for the types `double`, `std::complex<double>` and
 The repository is divided in:
 - include : (header files)
 - src : (source files)
+
 To run the program it is necessary to type `make` and `./main`. It is possible to execute other versions of `main` (`mainComplex.cpp`, `mainMatMatProduct.cpp`) by selecting them in the makefile.
