@@ -238,9 +238,11 @@ namespace algebra {
     template class Matrix<int, StorageOrder::ROW_MAJOR>;
     template class Matrix<double, StorageOrder::ROW_MAJOR>;
     template class Matrix<float, StorageOrder::ROW_MAJOR>;
+    template class Matrix<std::complex<double>, StorageOrder::ROW_MAJOR>;
 
     template class Matrix<int, StorageOrder::COLUMN_MAJOR>;
     template class Matrix<double, StorageOrder::COLUMN_MAJOR>;
     template class Matrix<float, StorageOrder::COLUMN_MAJOR>;
+    template class Matrix<std::complex<double>, StorageOrder::COLUMN_MAJOR>;
 
 } // namespace algebra

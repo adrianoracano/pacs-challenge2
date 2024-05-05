@@ -1,9 +1,9 @@
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++20 -Wall -Wextra -I../include #-Werror
+CXXFLAGS := -std=c++20 -Wall -Wextra -I../include -O3 #-Werror
 
 # Source files
-SRCS := Product.cpp Norm.cpp Matrix.cpp main.cpp
+SRCS := MatrixMatrixProduct.cpp Product.cpp Norm.cpp Matrix.cpp main.cpp
 
 # Object files
 OBJS := $(SRCS:.cpp=.o)

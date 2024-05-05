@@ -3,6 +3,7 @@
 #include <chrono>
 #include <iostream>
 #include <iomanip> // Include <iomanip> for formatting
+#include <random>
 
 using namespace algebra;
 
@@ -31,6 +32,9 @@ int main() {
 
     // Print a portion of the matrix
     printMatrix(matrix, 10, 10); // Print first 5 rows and 5 columns
+    std::cout<<"1-Norm of matrix = "<< matrix.norm< NormType::One>()<<std::endl;
+    std::cout<<"Infinity-Norm of matrix = "<< matrix.norm< NormType::Infinity>()<<std::endl;
+    std::cout<<"Frobenius-Norm of matrix  = "<< matrix.norm< NormType::Frobenius>()<<std::endl;
 
     // Generate vector of the right dimension
     std::vector<double> vec(matrix.getCols(), 1.0); // Fill with ones
@@ -56,7 +60,7 @@ int main() {
     // Output the time taken for the compressed product
     std::cout << "Time taken for matrix-vector product (compressed): " << duration_compressed.count() << " microseconds\n";
 
-    // Compare the results of uncompressed and compressed products (if necessary)
+    // Compare the results of uncompressed and compressed products
     std::cout << std::setw(10) << std::left << "Index" << std::setw(20) << std::left << "Uncompressed" 
                                                        << std::setw(20) << std::left << "Compressed"
                                                        << std::endl;
@@ -67,10 +71,80 @@ int main() {
                                                      << std::endl;
     }
 
-    std::cout<<"1-Norm of matrix = "<< matrix.norm< NormType::One>()<<std::endl;
-    std::cout<<"Infinity-Norm of matrix = "<< matrix.norm< NormType::Infinity>()<<std::endl;
-    std::cout<<"Frobenius-Norm of matrix  = "<< matrix.norm< NormType::Frobenius>()<<std::endl;
+    //Product with a matrix with just 1 column
+    Matrix<double, StorageOrder::COLUMN_MAJOR> v(matrix.getCols(), 1);
 
+    //Filling randomly the matrix
+    std::random_device rd;
+    std::mt19937 gen(rd()); // Mersenne Twister pseudo-random generator
+    std::uniform_int_distribution<int> dist(1, 5); // Random integers between 1 and 5
+
+    for(std::size_t i = 0; i < v.getRows() ; ++i){
+        v(i,0) = 1;
+    };
+
+    matrix.uncompress();
+    v.compress();
+
+    std::vector<double> result_1col = matrix * v;
+
+    for (size_t i = 0; i < result_1col.size(); ++i) {
+        std::cout << std::setw(10) << std::left << i << std::setw(20) << std::left << result_1col[i] 
+                                                     << std::endl;
+
+    }
+
+    //Trying product between 2 matrices
+    /* std::cout << "Product between 2 matrices: " << std::endl;
+
+    Matrix<double, StorageOrder::ROW_MAJOR> matrix2(matrix.getRows(), 2);
+
+    for(std::size_t i = 0; i < v.getRows() ; ++i){
+        for(std::size_t j = 0 ; j < 2 ; j++)
+            matrix2(i,j) = 1 * (j+1);
+    };
+
+    Matrix<double, StorageOrder::ROW_MAJOR> result_2col = matrix * matrix2;
+
+    for (size_t i = 0; i < result_2col.getRows(); ++i) {
+        std::cout << std::setw(10) << std::left << i << std::setw(20) << std::left << result_2col(i, 0) 
+                                                                      << std::left << result_2col(i, 1) 
+                                                                      << std::endl;
+
+    } */
+
+
+    
+
+    
+
+    /* //complex case
+    constexpr std::complex<double> val = {1.0, 1.0};
+    std::vector<std::complex<double>> v_complex(10, val);
+    std::size_t size = 10;
+    Matrix<double, Order> matrix_real(size);
+    Matrix<std::complex<double>, Order> matrix_complex(size);
+
+    //filling with random complex values
+    for(std::size_t i = 0; i < 10 ; ++i){
+        for(std::size_t j = 0; j < 10 ; ++j){
+            matrix_complex(i,j) = {dist(gen), dist(gen)};
+        }
+    }
+
+    std::cout<<"Complex case: "<<std::endl;
+
+    std::vector<std::complex<double>> result_complex = matrix_complex * v_complex;
+    
+    for (size_t i = 0; i < 10; ++i) {
+        std::cout << std::setw(10) << std::left << i << std::setw(20) << std::left << result_complex[i] 
+                                                     << std::endl;
+    }
+
+    std::cout<<"1-Norm of complex matrix = "<< matrix_complex.norm< NormType::One>()<<std::endl;
+    std::cout<<"Infinity-Norm of complex matrix = "<< matrix_complex.norm< NormType::Infinity>()<<std::endl;
+    std::cout<<"Frobenius-Norm of complex matrix  = "<< matrix_complex.norm< NormType::Frobenius>()<<std::endl;
+ */
     return 0;
 }
 
