@@ -8,7 +8,7 @@ The main methods are:
 - friend operator*() : matrix vector product;
 - friend operator*() : matrix matrix product.
 
-All the methods are available for the types `double`, `std::complex<double>` and the template parameters `StorageOrder::ROW_MAJOR`, `StorageOrder::COLUMN_MAJOR`.
+All the methods are available for the types `double`, `std::complex<double>` and both in ROW_MAJOR and COLUMN_MAJOR orderings.
 
 ### How to run the code:
 The repository is divided in:
