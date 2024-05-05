@@ -9,7 +9,7 @@ using namespace algebra;
 
 int main() {
     // Create an example matrix in uncompressed state
-    constexpr StorageOrder Order = StorageOrder::COLUMN_MAJOR;
+    constexpr StorageOrder Order = StorageOrder::ROW_MAJOR;
 
     // Read matrix from file
     std::string filename = "lnsp_131.mtx";
@@ -54,16 +54,6 @@ int main() {
     std::cout << "Time taken for matrix-vector product (uncompressed): " << duration_uncompressed.count() << " microseconds\n";
     // Output the time taken for the compressed product
     std::cout << "Time taken for matrix-vector product (compressed): " << duration_compressed.count() << " microseconds\n";
-
-
-    /* //Product with a matrix with just 1 column
-    Matrix<double, StorageOrder::COLUMN_MAJOR> v(matrix.getCols(), 1);
-    for(std::size_t i = 0; i < v.getRows() ; ++i){
-        v(i,0) = 1;
-    };
-
-    matrix.uncompress();
-    v.compress(); */
    
     return 0;
 }
