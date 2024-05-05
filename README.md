@@ -6,7 +6,8 @@ The main methods are:
 - operator() : call operator to access or add elements;
 - norm() : template function for the norm (can be One, Infinity or Frobenius);
 - friend operator*() : matrix vector product;
-- friend operator*() : matrix matrix product;
+- friend operator*() : matrix matrix product.
+
 All the methods are available for the types `double`, `std::complex<double>` and the template parameters `StorageOrder::ROW_MAJOR`, `StorageOrder::COLUMN_MAJOR`.
 
 ### How to run the code:
