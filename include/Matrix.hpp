@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <iostream>
+#include <complex>
 
 namespace algebra {
 
@@ -36,10 +37,11 @@ namespace algebra {
         template<typename U, StorageOrder Order1, StorageOrder Order2>
         friend std::vector<U> operator*(const Matrix<U, Order1>& mat1, const Matrix<U, Order2>& mat2);
 
+        template<typename U, StorageOrder Order1, StorageOrder Order2, StorageOrder OrderOut>
+        friend Matrix<U, OrderOut> operator*(const Matrix<U, Order1>& mat1, const Matrix<U, Order2>& mat2);
+
         template<typename U, StorageOrder S, NormType N>
         friend U norm(const Matrix<U, S>& mat);
-        //friend T norm<T, Order, NormType::Frobenius>(const Matrix<T, Order>& mat);
-        //friend T norm<T, Order, NormType::Infinity>(const Matrix<T, Order>& mat);
         
         template<NormType N>
         double norm();
@@ -51,6 +53,13 @@ namespace algebra {
 
         std::size_t getCols() const {
             return cols;
+        }
+
+        std::size_t getNnz() const {
+            if (!compressed)
+                return data.size();
+            else
+                return values.size();
         }
 
         void PrintRowIndices(){
