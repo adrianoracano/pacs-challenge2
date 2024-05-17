@@ -1,7 +1,7 @@
 
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
-
+// clang-format off
 #include <vector>
 #include <map>
 #include <array>
@@ -21,10 +21,10 @@ namespace algebra {
     template<typename T, StorageOrder Order>
     class Matrix {
     public:
-
+        //@note why not use doxygen for the comments?
         //Constructors
         Matrix();
-        explicit Matrix(std::size_t size);
+        explicit Matrix(std::size_t size);//@note good making constuctor explicit here!
         Matrix(std::size_t rows, std::size_t cols);
 
         //Methods for switching format

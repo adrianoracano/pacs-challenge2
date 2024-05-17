@@ -1,6 +1,6 @@
 
 #include "Matrix.hpp"
-
+// clang-format off
 namespace algebra {
 
     template<typename T, StorageOrder Order>
@@ -12,6 +12,13 @@ namespace algebra {
         if constexpr (Order == StorageOrder::ROW_MAJOR) {
             if (!mat.compressed) {
                 for(auto element : mat.data){
+                    //@note: better code. C++20 syntax simplifies things. Use references to avoid useless copies
+                    /*
+                    for(auto const & [indexes,value] : mat.data){
+                        auto const & [i,j] = indexes;
+                        result[i] += value * vec[j];
+                        }
+                    */
                     auto& i = (element.first)[0]; 
                     auto& j = (element.first)[1];
                     auto& value = element.second;
@@ -57,6 +64,14 @@ namespace algebra {
     }   
 
     // Explicit instantiation for matrix-vector multiplication
+    //@note this can be a good practice, but to be very effective in saving compulation time if you use this instances in many translation units
+    // is to store the resulting object file in a file. 
+    /*
+     However, you normally have the tempalte definitions in a header file, followed possibly be extern explicit template instantiations (in the header file)
+     The source file containes just the explicit template instantiation, and the compiler will generate the object file for the template instantiation
+     storing them in a library. As seen at lectures.
+     */
+    */
     template std::vector<double> operator*<double, StorageOrder::ROW_MAJOR>(const Matrix<double, StorageOrder::ROW_MAJOR>&, const std::vector<double>&);
     template std::vector<double> operator*<double, StorageOrder::COLUMN_MAJOR>(const Matrix<double, StorageOrder::COLUMN_MAJOR>&, const std::vector<double>&);
     template std::vector<std::complex<double>> operator*<std::complex<double>, StorageOrder::ROW_MAJOR>(const Matrix<std::complex<double>, StorageOrder::ROW_MAJOR>&, const std::vector<std::complex<double>>&);
